@@ -1,5 +1,5 @@
--- Ryoichiware Read this if your gay
-
+-- Ryoichiware Clean Rebuild
+-- cleaned core build from uploaded base
 
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
@@ -9,7 +9,9 @@ local RS = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
 local Lighting = game:GetService("Lighting")
 local TeleportService = game:GetService("TeleportService")
+-- =====================
 -- RYOICHIWARE UI SYSTEM
+-- =====================
 
 local UI = {}
 
@@ -218,7 +220,14 @@ local player = Players.LocalPlayer
 local PlayerGui = player:WaitForChild("PlayerGui")
 
 -- CONFIG
--- config saving removed for now
+local configFile = "ryoichi_config.json"
+local config = {}
+if isfile(configFile) then
+    config = HS:JSONDecode(readfile(configFile))
+end
+local function SaveConfig()
+    writefile(configFile, HS:JSONEncode(config))
+end
 
 -- GUI
 local gui = Instance.new("ScreenGui")
@@ -228,124 +237,6 @@ gui.IgnoreGuiInset = true
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 gui.DisplayOrder = 999999 -- makes it draw above almost everything
 gui.Parent = PlayerGui
-
--- WATERMARK
-local StatsService = game:GetService("Stats")
-local uiStartTime = tick()
-local watermarkEnabled = false
-local watermarkConnection = nil
-
-local watermarkGui = Instance.new("ScreenGui")
-watermarkGui.Name = "RyoichiwareWatermark"
-watermarkGui.ResetOnSpawn = false
-watermarkGui.IgnoreGuiInset = true
-watermarkGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
-watermarkGui.DisplayOrder = 1000000
-watermarkGui.Parent = PlayerGui
-
-local watermarkFrame = Instance.new("Frame")
-watermarkFrame.Name = "WatermarkFrame"
-watermarkFrame.Size = UDim2.new(0, 420, 0, 30)
-watermarkFrame.Position = UDim2.new(0, 18, 0, 18)
-watermarkFrame.BackgroundColor3 = Color3.fromRGB(14,14,18)
-watermarkFrame.BackgroundTransparency = 0.08
-watermarkFrame.Visible = false
-watermarkFrame.Parent = watermarkGui
-Instance.new("UICorner", watermarkFrame)
-
-local watermarkStroke = Instance.new("UIStroke")
-watermarkStroke.Color = Color3.fromRGB(32,32,40)
-watermarkStroke.Transparency = 0.15
-watermarkStroke.Thickness = 1
-watermarkStroke.Parent = watermarkFrame
-
-local watermarkLabel = Instance.new("TextLabel")
-watermarkLabel.Name = "WatermarkLabel"
-watermarkLabel.Size = UDim2.new(1,-18,1,0)
-watermarkLabel.Position = UDim2.new(0,9,0,0)
-watermarkLabel.BackgroundTransparency = 1
-watermarkLabel.TextXAlignment = Enum.TextXAlignment.Left
-watermarkLabel.Font = Enum.Font.GothamMedium
-watermarkLabel.TextSize = 13
-watermarkLabel.TextColor3 = Color3.new(1,1,1)
-watermarkLabel.Text = "Ryoichiware.exe | "..player.Name.." | 0 FPS | 0 MS | 00:00:00"
-watermarkLabel.Parent = watermarkFrame
-
-local function formatWatermarkTime(totalSeconds)
-	totalSeconds = math.max(0, math.floor(totalSeconds))
-	local hours = math.floor(totalSeconds / 3600)
-	local minutes = math.floor((totalSeconds % 3600) / 60)
-	local seconds = totalSeconds % 60
-	return string.format("%02d:%02d:%02d", hours, minutes, seconds)
-end
-
-local function getPingText()
-	local ok, value = pcall(function()
-		local network = StatsService:FindFirstChild("Network")
-		if not network then return "0 MS" end
-		local serverStats = network:FindFirstChild("ServerStatsItem")
-		if not serverStats then return "0 MS" end
-		local dataPing = serverStats:FindFirstChild("Data Ping")
-		if not dataPing then return "0 MS" end
-		local raw = tostring(dataPing:GetValueString())
-		raw = raw:gsub("%s+", " ")
-		if raw == "" then
-			return "0 MS"
-		end
-		return raw:upper()
-	end)
-	if ok and value then
-		return value
-	end
-	return "0 MS"
-end
-
-local fpsTime = 0
-local fpsFrames = 0
-local currentFps = 0
-
-local function updateWatermarkText()
-	watermarkLabel.Text = string.format(
-		"Ryoichiware.exe | %s | %d FPS | %s | %s",
-		player.Name,
-		currentFps,
-		getPingText(),
-		formatWatermarkTime(tick() - uiStartTime)
-	)
-end
-
-local function setWatermarkEnabled(state)
-	watermarkEnabled = state and true or false
-	watermarkFrame.Visible = watermarkEnabled
-	if watermarkEnabled then
-		updateWatermarkText()
-		if not watermarkConnection then
-			watermarkConnection = RS.RenderStepped:Connect(function(dt)
-				fpsTime = fpsTime + dt
-				fpsFrames = fpsFrames + 1
-				if fpsTime >= 0.5 then
-					currentFps = math.floor((fpsFrames / fpsTime) + 0.5)
-					fpsTime = 0
-					fpsFrames = 0
-					updateWatermarkText()
-				else
-					watermarkLabel.Text = string.format(
-						"Ryoichiware.exe | %s | %d FPS | %s | %s",
-						player.Name,
-						currentFps,
-						getPingText(),
-						formatWatermarkTime(tick() - uiStartTime)
-					)
-				end
-			end)
-		end
-	else
-		if watermarkConnection then
-			watermarkConnection:Disconnect()
-			watermarkConnection = nil
-		end
-	end
-end
 
 -- BLUR EFFECT
 local loaderBlur = Lighting:FindFirstChildOfClass("BlurEffect")
@@ -2270,56 +2161,6 @@ makeBarInteractable({xraySliderBar, xraySliderFill}, xraySliderBar, function(per
 		refreshXray()
 	end
 end)
-
--- =====================
--- WATERMARK TOGGLE
--- =====================
-
-local watermarkOptionFrame = Instance.new("Frame")
-watermarkOptionFrame.Size = UDim2.new(0,200,0,28)
-watermarkOptionFrame.BackgroundColor3 = Color3.fromRGB(50,50,50)
-watermarkOptionFrame.Parent = miscParent
-Instance.new("UICorner", watermarkOptionFrame)
-
-local watermarkOptionLabel = Instance.new("TextLabel")
-watermarkOptionLabel.Size = UDim2.new(0,120,1,0)
-watermarkOptionLabel.Position = UDim2.new(0,8,0,0)
-watermarkOptionLabel.BackgroundTransparency = 1
-watermarkOptionLabel.Text = "Watermark"
-watermarkOptionLabel.Font = Enum.Font.Gotham
-watermarkOptionLabel.TextSize = 14
-watermarkOptionLabel.TextColor3 = Color3.new(1,1,1)
-watermarkOptionLabel.TextXAlignment = Enum.TextXAlignment.Left
-watermarkOptionLabel.Parent = watermarkOptionFrame
-
-local watermarkSwitch = Instance.new("Frame")
-watermarkSwitch.Size = UDim2.new(0,34,0,16)
-watermarkSwitch.Position = UDim2.new(1,-42,0.5,-8)
-watermarkSwitch.BackgroundColor3 = Color3.fromRGB(80,80,80)
-watermarkSwitch.Parent = watermarkOptionFrame
-Instance.new("UICorner", watermarkSwitch)
-
-local watermarkKnob = Instance.new("Frame")
-watermarkKnob.Size = UDim2.new(0,14,0,14)
-watermarkKnob.Position = UDim2.new(0,1,0.5,-7)
-watermarkKnob.BackgroundColor3 = Color3.new(1,1,1)
-watermarkKnob.Parent = watermarkSwitch
-Instance.new("UICorner", watermarkKnob)
-
-local function refreshWatermarkToggleVisual()
-	TS:Create(watermarkKnob, TweenInfo.new(0.25), {
-		Position = watermarkEnabled and UDim2.new(1,-17,0.5,-7) or UDim2.new(0,1,0.5,-7)
-	}):Play()
-	TS:Create(watermarkSwitch, TweenInfo.new(0.25), {
-		BackgroundColor3 = watermarkEnabled and UI.Theme.Accent or Color3.fromRGB(80,80,80)
-	}):Play()
-end
-
-bindAimStyleToggle(watermarkOptionFrame, function()
-	setWatermarkEnabled(not watermarkEnabled)
-	refreshWatermarkToggleVisual()
-end)
-refreshWatermarkToggleVisual()
 
 -- =====================
 -- NOCLIP TOGGLE
