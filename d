@@ -1,4 +1,6 @@
--- Maybe by ryoichi read thi shit iff your gay
+-- Ryoichiware Read and your gay
+-- cleaned core build from uploaded base
+
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local TS = game:GetService("TweenService")
@@ -7,7 +9,9 @@ local RS = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
 local Lighting = game:GetService("Lighting")
 local TeleportService = game:GetService("TeleportService")
-
+-- 
+-- RYOICHIWARE UI SYSTEM
+-- 
 
 local UI = {}
 
@@ -416,7 +420,7 @@ end
 
 playIntroLoader()
 
-
+-- CUSTOM CURSOR
 local customCursor = Instance.new("Frame")
 customCursor.Size = UDim2.new(0,8,0,8)
 customCursor.BackgroundColor3 = Color3.fromRGB(170,0,255)
@@ -442,7 +446,7 @@ glow.Parent = customCursor
 Instance.new("UICorner",glow)
 
 
- =====================
+-- =====================
 -- PULSING WINDOW OUTLINE
 -- =====================
 
@@ -466,7 +470,10 @@ task.spawn(function()
 		task.wait(0.03)
 	end
 end)
-	
+-- =====================
+-- ANIME FLOATING HEART BACKGROUND
+-- =====================
+
 local heartContainer = Instance.new("Frame")
 heartContainer.Size = UDim2.new(1,0,1,0)
 heartContainer.BackgroundTransparency = 1
@@ -547,7 +554,7 @@ local function createHeart()
 	end)
 end
 
--- SPAWN  LOOP
+-- SPAWN HEARTS LOOP
 task.spawn(function()
 	while gui.Parent do
 		createHeart()
@@ -564,9 +571,9 @@ title.Font = Enum.Font.GothamBlack
 title.TextSize = 18
 title.TextXAlignment = Enum.TextXAlignment.Left
 title.Parent = window
-
+-- =====================
 -- SUBTLE ANIMATED TITLE GLOW
-
+-- =====================
 local titleStroke = Instance.new("UIStroke")
 titleStroke.Thickness = 1.5 -- thinner stroke for subtlety
 titleStroke.Color = Color3.fromRGB(200, 120, 255) -- softer glow color
@@ -730,14 +737,14 @@ for i,tabName in ipairs(tabs) do
 end
 SwitchTab("Main")
 
-
+-- =====================
 -- MAIN TAB FLY UI
-
+-- =====================
 local mainParent = tabContents["Main"]
 
-
+-- =====================
 -- 2 COLUMN LAYOUT
-
+-- =====================
 
 local columns = Instance.new("Frame")
 columns.Size = UDim2.new(1,0,0,0)
@@ -753,9 +760,9 @@ leftColumn.BackgroundTransparency = 1
 leftColumn.AutomaticSize = Enum.AutomaticSize.Y
 leftColumn.Parent = columns
 
-
+-- =====================
 -- FLY DROPDOWN
-
+-- =====================
 
 local flyContainer = UI.CreateDropdown(leftColumn,"Fly")
 flyContainer.LayoutOrder = 221
@@ -897,9 +904,9 @@ end)
 table.insert(connections, _G.__RYO_FLY_INPUT_CONNECTION)
 
 -- (UI: Fly Toggle / Keybind / Slider / Noclip / Fake Name / Hide User / Server Hop stays exactly your original)
--- 
+-- =====================
 -- FLY LEVER
--- 
+-- =====================
 
 local flyFrame = Instance.new("Frame")
 flyFrame.Size = UDim2.new(0,200,0,28)
@@ -949,9 +956,9 @@ end
 
 bindAimStyleToggle(flyFrame, toggleFly)
 
---
+-- =====================
 -- FLY KEYBIND
---
+-- =====================
 
 local keyFrame = Instance.new("Frame")
 keyFrame.Size = UDim2.new(0,200,0,28)
@@ -987,9 +994,9 @@ keyBindButton.MouseButton1Click:Connect(function()
 	keyBindButton.BackgroundColor3 = Color3.fromRGB(170,0,255)
 end)
 
---
+-- =====================
 -- FLY SPEED SLIDER
---
+-- =====================
 
 local speedFrame = UI.CreateCard(flyContainer,36)
 
@@ -1022,17 +1029,17 @@ makeBarInteractable({sliderBar, sliderFill}, sliderBar, function(percent)
 	sliderFill.Size = UDim2.new(percent,0,1,0)
 	speedLabel.Text = "Fly Speed: "..speed
 end)-- All lever frames, sliders, buttons, labels remain unchanged
--- 
+-- =====================
 -- ESP DROPDOWN
---
+-- =====================
 
 local espContainer = UI.CreateDropdown(leftColumn,"ESP")
 espContainer.LayoutOrder = 220
 
 
---
+-- =====================
 -- COMBINED NAME + HEALTH ESP
---
+-- =====================
 
 local function removeCombinedESP(character)
 	if not character then return end
@@ -1118,9 +1125,9 @@ local function updateCombinedESP()
 	end
 end
 
---
+-- =====================
 -- CHAMS TOGGLE
---
+-- =====================
 
 local chamsEnabled = false
 local chamsColor = Color3.fromRGB(60,170,255)
@@ -1232,9 +1239,9 @@ local function toggleChams()
 
 end
 bindAimStyleToggle(chamsFrame, toggleChams)
--- 
+-- =====================
 -- HEALTH ESP
---
+-- =====================
 
 local healthESPEnabled = false
 
@@ -1362,9 +1369,9 @@ local function toggleHealthESP()
 end
 
 bindAimStyleToggle(healthFrame, toggleHealthESP)
--- 
+-- =====================
 -- NAME ESP
--- 
+-- =====================
 
 local nameESPEnabled = false
 
@@ -1490,9 +1497,9 @@ local function toggleNameESP()
 end
 
 bindAimStyleToggle(nameFrame, toggleNameESP)
---
+-- =====================
 -- AIM DROPDOWN
--- 
+-- =====================
 local memoryAimEnabled = false
 local aimKey = Enum.KeyCode.E
 local aimPart = "Head"
@@ -1506,9 +1513,9 @@ local lockedTarget = nil
 local lastLockTime = 0
 local lockDuration = 0.35
 
---
+-- =====================
 -- TARGET FINDER (FOV SYSTEM)
---
+-- =====================
 
 local function getClosestPlayer()
 
@@ -1567,9 +1574,9 @@ end
 
 end
 
--- 
+-- =====================
 -- MOUSE AIM TOGGLE
---
+-- =====================
 
 local mouseAimEnabled = false
 
@@ -1622,9 +1629,9 @@ mouseAimFrame.InputBegan:Connect(function(input)
 	end
 end)
 
--- 
+-- =====================
 -- MEMORY AIM TOGGLE
--- 
+-- =====================
 
 
 local memoryAimFrame = UI.CreateCard(aimContainer,28)
@@ -1675,9 +1682,10 @@ memoryAimFrame.InputBegan:Connect(function(input)
 		toggleMemoryAim()
 	end
 end)
--- 
+-- =====================
 -- FOV CIRCLE TOGGLE
---
+-- =====================
+
 
 
 local fovToggleFrame = UI.CreateCard(aimContainer,28)
@@ -1728,9 +1736,10 @@ fovToggleFrame.InputBegan:Connect(function(input)
 		toggleFovCircle()
 	end
 end)
--- 
+-- =====================
 -- FOV SLIDER
--- 
+-- =====================
+
 
 local fovFrame = UI.CreateCard(aimContainer,36)
 
@@ -1763,9 +1772,9 @@ makeBarInteractable({fovBar, fovFill}, fovBar, function(percent)
 	fovFill.Size = UDim2.new(percent,0,1,0)
 	fovLabel.Text = "FOV: "..fovValue
 end)
---
+-- =====================
 -- FOV CIRCLE
--- 
+-- =====================
 
 local fovCircle = Drawing.new("Circle")
 fovCircle.Visible = false
@@ -1791,9 +1800,9 @@ RS.RenderStepped:Connect(function()
 	fovCircle.Radius = fovValue
 
 end)
--- 
+-- =====================
 -- AIM SMOOTHNESS SLIDER
--- 
+-- =====================
 
 local smoothValue = 5
 
@@ -1804,9 +1813,9 @@ smoothLabel.Size = UDim2.new(1,0,0,14)
 smoothLabel.Position = UDim2.new(0,8,0,2)
 smoothLabel.BackgroundTransparency = 1
 smoothLabel.Text = "Smoothness: "..smoothValue
--- 
+-- =====================
 -- MEMORY AIM SYSTEM
---
+-- =====================
 
 RS.RenderStepped:Connect(function()
 
@@ -1829,9 +1838,9 @@ RS.RenderStepped:Connect(function()
 end)
 
 local mouseAimStrength = 0.1
---
+-- =====================
 -- MOUSE AIM SYSTEM (KEYBIND + FOV)
---
+-- =====================
 
 RS.RenderStepped:Connect(function()
 
@@ -1893,9 +1902,10 @@ makeBarInteractable({smoothBar, smoothFill}, smoothBar, function(percent)
 	smoothFill.Size = UDim2.new(percent,0,1,0)
 	smoothLabel.Text = "Smoothness: "..smoothValue
 end)
--- 
+-- =====================
 -- AIM KEYBIND
--- 
+-- =====================
+
 local waitingForKey = false
 
 local function getBindingDisplayName(binding)
@@ -1935,9 +1945,9 @@ aimKeyOverlay.MouseButton1Click:Connect(function()
 	waitingForKey = true
 	keyLabel.Text = "Aim Key: Press a key..."
 end)
---
+-- =====================
 -- AIM PART SELECT
--- 
+-- =====================
 
 local aimParts = {"Head","HumanoidRootPart","UpperTorso"}
 local partIndex = 1
@@ -1966,16 +1976,16 @@ partFrame.InputBegan:Connect(function(input)
 		
 	end
 end)
--- 
+-- =====================
 -- MISC TAB
---
+-- =====================
 
 local miscParent = tabContents["Misc"]
 
 
--- 
+-- =====================
 -- XRAY UI
--- 
+-- =====================
 
 local xrayEnabled = false
 local xrayStrength = 65
