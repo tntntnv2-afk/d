@@ -1,5 +1,5 @@
--- Ryoichiware Clean Rebuild
--- cleaned core build from uploaded base
+-- Ryoichiware 
+-- 
 
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
