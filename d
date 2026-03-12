@@ -1,5 +1,5 @@
----- Made by giga nigga Ryoichi and if you are reading this you like fat dick
-----
+--Made by giga nigga Ryoichi and if you are reading this you like fat dick
+
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local TS = game:GetService("TweenService")
